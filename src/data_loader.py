@@ -177,6 +177,7 @@ def load_toxicity_dataset() -> Tuple[pd.DataFrame, bool]:
     """
     Tries to download the Jigsaw Toxic Comment dataset from Hugging Face.
     If it fails, automatically generates a rich synthetic gaming-chat dataset.
+    """
     print("Attempting to load Jigsaw Toxic Comment Dataset...")
     hf_repos = [
         "thesofakillers/jigsaw-toxic-comment-classification-challenge",
