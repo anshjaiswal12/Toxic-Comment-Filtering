@@ -1,3 +1,7 @@
+# ==========================================
+# Author: Ansh Jaiswal
+# Neutra-Mod Text Preprocessor (NLP Normalization)
+# ==========================================
 import re
 import emoji
 

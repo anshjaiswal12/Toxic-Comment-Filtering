@@ -1,3 +1,7 @@
+# ==========================================
+# Author: Ansh Jaiswal
+# Neutra-Mod Zip Submission Automation Script
+# ==========================================
 import os
 import zipfile
 
@@ -20,7 +24,6 @@ def create_zip_submission():
         "generate_logs.py",
         "zip_submission.py",
         "toxicity_moderation_demo.ipynb",
-        "Instructions.md",
         "README.md",
         "architecture.md",
         "submission_manifest.md"

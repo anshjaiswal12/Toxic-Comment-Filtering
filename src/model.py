@@ -1,3 +1,7 @@
+# ==========================================
+# Author: Ansh Jaiswal
+# Neutra-Mod Toxicity Classifier Architectures (Classical & DL)
+# ==========================================
 import os
 import joblib
 import numpy as np

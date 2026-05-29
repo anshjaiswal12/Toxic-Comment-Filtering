@@ -1,3 +1,7 @@
+# ==========================================
+# Author: Ansh Jaiswal
+# Neutra-Mod Streamlit Console Application
+# ==========================================
 import os
 import time
 import random
@@ -483,6 +487,7 @@ with tab_analytics:
             ax.legend(facecolor='#1A1C23', labelcolor='white', framealpha=0.6, fontsize='small')
             
             st.pyplot(fig)
+            plt.close(fig)
         else:
             st.info("No messages in queue to chart timeline.")
             
@@ -508,6 +513,7 @@ with tab_analytics:
                 plt.xticks(rotation=45)
                 
                 st.pyplot(fig)
+                plt.close(fig)
         else:
             # Standard pre-validation check
             # Load and display saved validation performance charts if they exist

@@ -1,3 +1,7 @@
+# ==========================================
+# Author: Ansh Jaiswal
+# Neutra-Mod ML Model Training Pipeline
+# ==========================================
 import os
 import time
 import pandas as pd
@@ -98,7 +102,6 @@ def run_training_pipeline():
     os.makedirs("models", exist_ok=True)
     os.makedirs("artifacts", exist_ok=True)
     
-    plt.figure(figsize=(10, 6))
     metrics_to_plot = ['precision', 'recall', 'f1-score']
     class_metrics = {m: [report_dict[c][m] for c in categories] for m in metrics_to_plot}
     
@@ -130,10 +133,10 @@ def run_training_pipeline():
     plt.tight_layout()
     plot_path = "artifacts/evaluation_metrics.png"
     plt.savefig(plot_path, dpi=150, facecolor=fig.get_facecolor(), edgecolor='none')
+    plt.close(fig)
     print(f"Performance plots successfully saved to: {plot_path}")
     
     # Save the correlation matrix of categories
-    plt.figure(figsize=(8, 6))
     fig, ax = plt.subplots(figsize=(8, 6))
     fig.patch.set_facecolor('#0E1117')
     ax.set_facecolor('#1A1C23')
@@ -144,6 +147,7 @@ def run_training_pipeline():
     plt.tight_layout()
     corr_path = "artifacts/label_correlations.png"
     plt.savefig(corr_path, dpi=150, facecolor=fig.get_facecolor(), edgecolor='none')
+    plt.close(fig)
     print(f"Label correlation heatmap saved to: {corr_path}")
     
     # 8. Save Trained Model

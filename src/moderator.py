@@ -1,3 +1,7 @@
+# ==========================================
+# Author: Ansh Jaiswal
+# Neutra-Mod ContentModerator & SpamDetector Engines
+# ==========================================
 import re
 import time
 from typing import Dict, List, Tuple, Any

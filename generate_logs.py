@@ -1,3 +1,7 @@
+# ==========================================
+# Author: Ansh Jaiswal
+# Neutra-Mod Server Chat & Filtration Log Simulator
+# ==========================================
 import os
 import time
 import random

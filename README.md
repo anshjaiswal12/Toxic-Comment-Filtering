@@ -1,5 +1,7 @@
 # 🛡️ NEUTRA-MOD: High-Fidelity Toxic Comment Filtering & Moderation Alert System
 
+**Author**: Ansh Jaiswal
+
 NEUTRA-MOD is a state-of-the-art, multi-label text classifier and automated moderation alert system designed for a gaming platform's live chat feed. The system Normalizes gaming-specific dialects (abbreviations, slurs, emojis), identifies structural spamming, computes a unified **0 to 5 severity hazard score**, and enforces dynamic moderation actions (**ALLOW**, **WARN**, **MUTE**, **BAN**).
 
 ---
