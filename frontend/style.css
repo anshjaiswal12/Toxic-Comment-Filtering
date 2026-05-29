@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* Force dark application background */
+.stApp {
+    background-color: #0B0C0E !important;
+}
+
+/* Global text color overrides for dark minimalist aesthetic */
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+    color: #E5E7EB !important;
+}
+
+/* Ensure all text block variants align to elegant dark layout */
+p, span, label, li, h1, h2, h3, h4, h5, h6, table, tr, td, th {
+    color: #E5E7EB !important;
+}
+
+/* Input label / help text colors */
+.stTextInput label, .stSlider label {
+    color: #9CA3AF !important;
+}
+
+h1, h2, h3, .title-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #FFFFFF !important;
+}
+
+/* Sidebar styling */
+[data-testid="stSidebar"] {
+    background-color: #0E0F12 !important;
+    border-right: 1px solid #1A1C20 !important;
+}
+[data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
+    color: #E5E7EB !important;
+}
+
+/* Custom Scrollbar for chat container */
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: #0B0C0E; 
+}
+::-webkit-scrollbar-thumb {
+    background: #1F2229; 
+    border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #374151; 
+}
+
+/* Minimal Aesthetic classes */
+.minimal-subhead {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.minimal-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+    margin-top: 0px;
+    margin-bottom: 6px;
+}
+
+.minimal-subtitle {
+    font-size: 0.85rem;
+    color: #9CA3AF;
+    margin-bottom: 24px;
+}
+
+/* Custom Minimal Input (text box) */
+.minimal-input-container {
+    border-bottom: 1px solid #1F2937;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+}
+
+/* Glowing/Action Dot indicator */
+@keyframes pulse-dot-active {
+    0% { transform: scale(0.95); opacity: 0.75; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.75; }
+}
+.dot-active { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #10B981; animation: pulse-dot-active 2s infinite ease-in-out; }
+.dot-warned { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #F59E0B; }
+.dot-muted { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #3B82F6; }
+.dot-banned { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #EF4444; }
+
+/* Minimal Badge tags */
+.badge-warn {
+    font-family: 'JetBrains Mono', monospace;
+    color: #F59E0B;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 6px;
+}
+.badge-mute {
+    font-family: 'JetBrains Mono', monospace;
+    color: #3B82F6;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 6px;
+}
+.badge-ban {
+    font-family: 'JetBrains Mono', monospace;
+    color: #EF4444;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 6px;
+}

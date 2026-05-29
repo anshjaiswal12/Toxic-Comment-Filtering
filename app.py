@@ -12,6 +12,14 @@ from src.model import ToxicityClassifier, DeepLearningToxicityClassifier
 from src.moderator import ContentModerator
 from train import run_training_pipeline
 
+# Helper to serve decoupled frontend assets
+def load_frontend_asset(filename: str) -> str:
+    filepath = os.path.join("frontend", filename)
+    if os.path.exists(filepath):
+        with open(filepath, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
 # ---------------------------------------------------------
 # Page Configurations & Styling
 # ---------------------------------------------------------
@@ -22,130 +30,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Dark-themed custom minimal CSS injection
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-    
-    /* Force dark application background */
-    .stApp {
-        background-color: #0B0C0E !important;
-    }
-    
-    /* Global text color overrides for dark minimalist aesthetic */
-    html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;
-        color: #E5E7EB !important;
-    }
-    
-    /* Ensure all text block variants align to elegant dark layout */
-    p, span, label, li, h1, h2, h3, h4, h5, h6, table, tr, td, th {
-        color: #E5E7EB !important;
-    }
-    
-    /* Input label / help text colors */
-    .stTextInput label, .stSlider label {
-        color: #9CA3AF !important;
-    }
-    
-    h1, h2, h3, .title-text {
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-        color: #FFFFFF !important;
-    }
-    
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        background-color: #0E0F12 !important;
-        border-right: 1px solid #1A1C20 !important;
-    }
-    [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
-        color: #E5E7EB !important;
-    }
-    
-    /* Custom Scrollbar for chat container */
-    ::-webkit-scrollbar {
-        width: 4px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #0B0C0E; 
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #1F2229; 
-        border-radius: 2px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #374151; 
-    }
-    
-    /* Minimal Aesthetic classes */
-    .minimal-subhead {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.65rem;
-        color: #6B7280;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 6px;
-    }
-    
-    .minimal-title {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #FFFFFF;
-        letter-spacing: -0.5px;
-        margin-top: 0px;
-        margin-bottom: 6px;
-    }
-    
-    .minimal-subtitle {
-        font-size: 0.85rem;
-        color: #9CA3AF;
-        margin-bottom: 24px;
-    }
-    
-    /* Custom Minimal Input (text box) */
-    .minimal-input-container {
-        border-bottom: 1px solid #1F2937;
-        margin-bottom: 12px;
-        padding-bottom: 6px;
-    }
-    
-    /* Glowing/Action Dot indicator */
-    @keyframes pulse-dot-active {
-        0% { transform: scale(0.95); opacity: 0.75; }
-        50% { transform: scale(1.1); opacity: 1; }
-        100% { transform: scale(0.95); opacity: 0.75; }
-    }
-    .dot-active { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #10B981; animation: pulse-dot-active 2s infinite ease-in-out; }
-    .dot-warned { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #F59E0B; }
-    .dot-muted { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #3B82F6; }
-    .dot-banned { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #EF4444; }
-    
-    /* Minimal Badge tags */
-    .badge-warn {
-        font-family: 'JetBrains Mono', monospace;
-        color: #F59E0B;
-        font-size: 0.7rem;
-        font-weight: bold;
-        margin-left: 6px;
-    }
-    .badge-mute {
-        font-family: 'JetBrains Mono', monospace;
-        color: #3B82F6;
-        font-size: 0.7rem;
-        font-weight: bold;
-        margin-left: 6px;
-    }
-    .badge-ban {
-        font-family: 'JetBrains Mono', monospace;
-        color: #EF4444;
-        font-size: 0.7rem;
-        font-weight: bold;
-        margin-left: 6px;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Load external CSS stylesheet
+css_content = load_frontend_asset("style.css")
+if css_content:
+    st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
+
+# Load external JavaScript validation checks
+js_content = load_frontend_asset("script.js")
+if js_content:
+    st.markdown(f"<script>{js_content}</script>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # Load Moderation System State
@@ -259,14 +152,9 @@ else:
 # ---------------------------------------------------------
 # Main Page View
 # ---------------------------------------------------------
-st.markdown("""
-<div style='margin-bottom: 35px; border-bottom: 1px solid #1A1C20; padding-bottom: 25px; padding-top: 15px;'>
-    <div class='minimal-subhead'>RETRIEVAL & MITIGATION</div>
-    <div class='minimal-title'>Semantic Moderation</div>
-    <div class='minimal-subtitle'>Multi-label content classifier, real-time threat analysis, and automated player mitigation strategies</div>
-    <div class='minimal-status'>// severe_toxic offline validation: precision > 80%</div>
-</div>
-""", unsafe_allow_html=True)
+header_html = load_frontend_asset("header.html")
+if header_html:
+    st.markdown(header_html, unsafe_allow_html=True)
 
 # Tabs
 tab_simulator, tab_analytics, tab_policy = st.tabs([
@@ -288,13 +176,9 @@ with tab_simulator:
     col_chat, col_player_status = st.columns([3, 1])
     
     with col_chat:
-        st.markdown("""
-        <div style='margin-bottom: 20px;'>
-            <div class='minimal-subhead'>CAPTURE</div>
-            <div class='minimal-title' style='font-size: 1.4rem;'>Live Ingestion</div>
-            <div class='minimal-subtitle' style='margin-bottom: 10px;'>Simulating real-time game stream chatter and automatic filtration.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        chat_header = load_frontend_asset("chat_header.html")
+        if chat_header:
+            st.markdown(chat_header, unsafe_allow_html=True)
         
         # Simulation controls
         sim_cols = st.columns([4, 1])
@@ -400,13 +284,9 @@ with tab_simulator:
             st.rerun()
             
     with col_player_status:
-        st.markdown("""
-        <div style='margin-bottom: 20px;'>
-            <div class='minimal-subhead'>RETRIEVAL & SERVER FEED</div>
-            <div class='minimal-title' style='font-size: 1.4rem;'>Active Directory</div>
-            <div class='minimal-subtitle' style='margin-bottom: 10px;'>Online player tracking indicators, mitigation logs, and filters.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        directory_header = load_frontend_asset("directory_header.html")
+        if directory_header:
+            st.markdown(directory_header, unsafe_allow_html=True)
         
         for p, status in st.session_state.active_players.items():
             color = "#10B981"  # Active (Green)
@@ -435,13 +315,9 @@ with tab_simulator:
     if last_user_msgs:
         last_msg = last_user_msgs[-1]
         
-        st.markdown("""
-        <div style='margin-bottom: 25px; margin-top: 35px; border-top: 1px solid #1A1C20; padding-top: 25px;'>
-            <div class='minimal-subhead'>ANALYSIS</div>
-            <div class='minimal-title' style='font-size: 1.4rem;'>Inference Pipeline Metrics</div>
-            <div class='minimal-subtitle' style='margin-bottom: 10px;'>Live severity checks, preprocessed text vectors, and multi-label probability arrays.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        pipeline_metrics_header = load_frontend_asset("pipeline_metrics_header.html")
+        if pipeline_metrics_header:
+            st.markdown(pipeline_metrics_header, unsafe_allow_html=True)
         
         # If model is loaded, we can re-analyze or fetch details
         raw_txt = last_msg.get("original", last_msg["text"])
@@ -531,13 +407,9 @@ with tab_simulator:
 # TAB 2: Admin Analytics Dashboard
 # ---------------------------------------------------------
 with tab_analytics:
-    st.markdown("""
-    <div style='margin-bottom: 25px; padding-bottom: 10px;'>
-        <div class='minimal-subhead'>RETRIEVAL & TELEMETRY</div>
-        <div class='minimal-title' style='font-size: 1.4rem;'>Moderation Event Dashboard</div>
-        <div class='minimal-subtitle' style='margin-bottom: 10px;'>High-fidelity pipeline telemetry, real-time mitigation timelines, and active class metrics.</div>
-    </div>
-    """, unsafe_allow_html=True)
+    analytics_header = load_frontend_asset("analytics_header.html")
+    if analytics_header:
+        st.markdown(analytics_header, unsafe_allow_html=True)
     
     # Summary Metrics Row
     m_col1, m_col2, m_col3, m_col4 = st.columns(4)
@@ -665,18 +537,9 @@ with tab_analytics:
 # TAB 3: Mitigation Strategies Policy
 # ---------------------------------------------------------
 with tab_policy:
-    st.markdown("""
-    <div style='margin-bottom: 25px; padding-bottom: 10px;'>
-        <div class='minimal-subhead'>STRATEGIC INSTRUCTION</div>
-        <div class='minimal-title' style='font-size: 1.4rem;'>Mitigation Policies & Escalation Matrix</div>
-        <div class='minimal-subtitle' style='margin-bottom: 10px;'>Regulatory mitigation blueprints, severity scaling parameters, and platform safety frameworks.</div>
-    </div>
-    
-    <div style='font-size: 0.85rem; color: #9CA3AF; margin-bottom: 20px; line-height: 1.6;'>
-        To preserve a fun and cooperative gaming atmosphere, our live chat operates on a tiered moderation model that evaluates structural message patterns (spam) and semantics (toxicity, hate speech, threats) using high-precision AI models.
-    </div>
-    <div class='minimal-subhead' style='margin-bottom: 10px;'>Tiers & Action Dispatches</div>
-    """, unsafe_allow_html=True)
+    policy_header = load_frontend_asset("policy_header.html")
+    if policy_header:
+        st.markdown(policy_header, unsafe_allow_html=True)
     
     # Draw table
     col_p_data = {
@@ -687,25 +550,6 @@ with tab_policy:
     }
     st.table(pd.DataFrame(col_p_data))
     
-    st.markdown("""
-    <div class='minimal-subhead' style='margin-top: 25px; margin-bottom: 15px;'>🛡️ Key Features of Moderation Mitigation</div>
-    
-    <div style='font-family: "Inter", sans-serif; font-size: 0.95rem; line-height: 1.6; color: #9CA3AF;'>
-        <div style='margin-bottom: 12px;'>
-            <strong style='color: #FFFFFF; font-family: "JetBrains Mono", monospace; font-size: 0.8rem;'>01 // Context-Aware Preprocessing</strong><br>
-            Normalizes gaming slang (e.g. <i>kys</i>, <i>stfu</i>) and standardizes emoji syntax (e.g. 🖕) to neutralize bypass vectors.
-        </div>
-        <div style='margin-bottom: 12px;'>
-            <strong style='color: #FFFFFF; font-family: "JetBrains Mono", monospace; font-size: 0.8rem;'>02 // Contextual Word Redaction</strong><br>
-            Censors specific offensive tokens while preserving standard conversational context to protect legitimate team communication.
-        </div>
-        <div style='margin-bottom: 12px;'>
-            <strong style='color: #FFFFFF; font-family: "JetBrains Mono", monospace; font-size: 0.8rem;'>03 // Precision Guarantee Fallback</strong><br>
-            Enforces strict evaluation thresholds to maintain low false positive rates, protecting standard gaming banter from false flags.
-        </div>
-        <div style='margin-bottom: 12px;'>
-            <strong style='color: #FFFFFF; font-family: "JetBrains Mono", monospace; font-size: 0.8rem;'>04 // Rate Limit & Caps Defense</strong><br>
-            Mitigates chat flooding and uppercase shouting by monitoring player input frequencies and caps abuse ratios in real-time.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    key_features = load_frontend_asset("key_features.html")
+    if key_features:
+        st.markdown(key_features, unsafe_allow_html=True)
