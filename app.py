@@ -227,7 +227,7 @@ with tab_simulator:
             st.markdown("<div style='font-size: 0.75rem; color: #6B7280; font-family: \"JetBrains Mono\", monospace;'>// click trigger simulation to inject dynamic streaming context</div>", unsafe_allow_html=True)
             
         # Draw the scrollable chat
-        chat_html = "<div class='chat-container' style='max-height: 400px; overflow-y: auto; padding: 15px 0px; border-top: 1px solid #1A1C20; border-bottom: 1px solid #1A1C20; background-color: transparent; margin-bottom: 15px; margin-top: 10px;'>"
+        chat_html = "<div class='chat-container' style='max-height: 400px; overflow-y: auto; padding: 15px 0px; border-top: 1px solid rgba(128,128,128,0.15); border-bottom: 1px solid rgba(128,128,128,0.15); background-color: transparent; margin-bottom: 15px; margin-top: 10px;'>"
         for msg in st.session_state.chat_history[-15:]:  # Display last 15 messages
             username = msg["username"]
             text = msg["text"]
@@ -246,7 +246,7 @@ with tab_simulator:
                     
                 # Format timestamp
                 time_str = time.strftime('%H:%M:%S', time.localtime(msg["timestamp"]))
-                chat_html += f"<div style='margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed rgba(255,255,255,0.03); font-family: \"Inter\", sans-serif; font-size: 0.9rem;'><span style='font-family: \"JetBrains Mono\", monospace; color: #4B5563; font-size: 0.75rem; margin-right: 8px;'>[{time_str}]</span> <span style='color: #FFFFFF; font-weight: 600;'>{username}</span>{badge} <span style='color: #9CA3AF; margin-left: 8px;'>{text}</span></div>"
+                chat_html += f"<div class='chat-dashed-line' style='margin-bottom: 12px; padding-bottom: 8px; font-family: \"Inter\", sans-serif; font-size: 0.9rem;'><span style='font-family: \"JetBrains Mono\", monospace; color: #6B7280; opacity: 0.8; font-size: 0.75rem; margin-right: 8px;'>[{time_str}]</span> <span class='text-high-contrast' style='font-weight: 600;'>{username}</span>{badge} <span class='text-muted-contrast' style='margin-left: 8px;'>{text}</span></div>"
         chat_html += "</div>"
         st.markdown(chat_html, unsafe_allow_html=True)
         
@@ -340,28 +340,28 @@ with tab_simulator:
                 color = "#EF4444"
                 
             st.markdown(f"""
-            <div style='background-color: transparent; padding: 12px 0px; border-bottom: 1px solid #1A1C20; display: flex; justify-content: space-between; align-items: center; font-family: "Inter", sans-serif; font-size: 0.9rem;'>
-                <span style='color: #6B7280; font-family: "JetBrains Mono", monospace; font-size: 0.75rem; text-transform: uppercase;'>Input message</span>
-                <span style='color: #FFFFFF; font-weight: 500;'>"{raw_txt}"</span>
+            <div class='border-divider' style='background-color: transparent; padding: 12px 0px; display: flex; justify-content: space-between; align-items: center; font-family: "Inter", sans-serif; font-size: 0.9rem;'>
+                <span class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.75rem; text-transform: uppercase;'>Input message</span>
+                <span class='text-high-contrast' style='font-weight: 500;'>"{raw_txt}"</span>
             </div>
-            <div style='background-color: transparent; padding: 12px 0px; border-bottom: 1px solid #1A1C20; display: flex; justify-content: space-between; align-items: center; font-family: "Inter", sans-serif; font-size: 0.9rem;'>
-                <span style='color: #6B7280; font-family: "JetBrains Mono", monospace; font-size: 0.75rem; text-transform: uppercase;'>Normalized text</span>
-                <span style='color: #9CA3AF; font-weight: 500;'>"{rep['preprocessed_text']}"</span>
+            <div class='border-divider' style='background-color: transparent; padding: 12px 0px; display: flex; justify-content: space-between; align-items: center; font-family: "Inter", sans-serif; font-size: 0.9rem;'>
+                <span class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.75rem; text-transform: uppercase;'>Normalized text</span>
+                <span class='text-muted-contrast' style='font-weight: 500;'>"{rep['preprocessed_text']}"</span>
             </div>
-            <div style='background-color: transparent; padding: 12px 0px; border-bottom: 1px solid #1A1C20; display: flex; justify-content: space-between; align-items: center; font-family: "Inter", sans-serif; font-size: 0.9rem;'>
-                <span style='color: #6B7280; font-family: "JetBrains Mono", monospace; font-size: 0.75rem; text-transform: uppercase;'>Filtration output</span>
+            <div class='border-divider' style='background-color: transparent; padding: 12px 0px; display: flex; justify-content: space-between; align-items: center; font-family: "Inter", sans-serif; font-size: 0.9rem;'>
+                <span class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.75rem; text-transform: uppercase;'>Filtration output</span>
                 <span style='color: #10B981; font-weight: 500;'>"{rep['redacted_text']}"</span>
             </div>
             
-            <div style='background-color: #0E0F12; border: 1px solid #1A1C20; padding: 20px; border-radius: 4px; border-top: 4px solid {color}; margin-top: 20px;'>
-                <div style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; text-transform: uppercase; color: #6B7280; letter-spacing: 1px;'>Computed Severity Index</div>
-                <div style='font-size: 2.2rem; font-weight: 700; color: #FFFFFF; margin: 8px 0; font-family: "JetBrains Mono", monospace;'>{sev:.2f} <span style='font-size: 1rem; color: #4B5563;'>/ 5.00</span></div>
-                <div style='font-family: "Inter", sans-serif; font-size: 0.85rem; color: #9CA3AF;'>Recommendation: <strong style='color: #FFFFFF;'>{rep['action']}</strong> // {rep['action_reason']}</div>
+            <div class='card-container' style='border-top: 4px solid {color} !important; margin-top: 20px; padding: 20px;'>
+                <div class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;'>Computed Severity Index</div>
+                <div class='text-high-contrast' style='font-size: 2.2rem; font-weight: 700; margin: 8px 0; font-family: "JetBrains Mono", monospace;'>{sev:.2f} <span class='text-dim-contrast' style='font-size: 1rem;'>/ 5.00</span></div>
+                <div class='text-muted-contrast' style='font-family: "Inter", sans-serif; font-size: 0.85rem;'>Recommendation: <strong class='text-high-contrast'>{rep['action']}</strong> // {rep['action_reason']}</div>
             </div>
             """, unsafe_allow_html=True)
             
         with col_m2:
-            st.markdown("<div style='font-family: \"JetBrains Mono\", monospace; font-size: 0.75rem; text-transform: uppercase; color: #6B7280; letter-spacing: 1px; margin-bottom: 15px;'>Predicted Multi-label Class Probabilities</div>", unsafe_allow_html=True)
+            st.markdown("<div class='text-dim-contrast' style='font-family: \"JetBrains Mono\", monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;'>Predicted Multi-label Class Probabilities</div>", unsafe_allow_html=True)
             
             categories_disp = {
                 'toxic': 'Toxic (General)',
@@ -392,12 +392,12 @@ with tab_simulator:
                         
                 pct = prob * 100
                 st.markdown(f"""
-                <div style='background-color: transparent; padding: 10px 0px; border-bottom: 1px solid #1A1C20; margin-bottom: 10px;'>
+                <div class='border-divider' style='background-color: transparent; padding: 10px 0px; margin-bottom: 10px;'>
                     <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;'>
-                        <span style='font-weight: 500; color: #FFFFFF; font-size: 0.85rem; display: flex; align-items: center;'>{display_name}{flag_badge}</span>
+                        <span class='text-high-contrast' style='font-weight: 500; font-size: 0.85rem; display: flex; align-items: center;'>{display_name}{flag_badge}</span>
                         <span style='font-family: "JetBrains Mono", monospace; color: {glow_color}; font-weight: 700; font-size: 0.85rem;'>{prob:.1%}</span>
                     </div>
-                    <div style='background-color: #111215; height: 3px; border-radius: 1.5px; overflow: hidden;'>
+                    <div style='background-color: rgba(128, 128, 128, 0.12); height: 3px; border-radius: 1.5px; overflow: hidden;'>
                         <div style='background-color: {glow_color}; width: {pct:.2f}%; height: 100%;'></div>
                     </div>
                 </div>
@@ -426,29 +426,29 @@ with tab_analytics:
     
     with m_col1:
         st.markdown(f"""
-        <div style='background-color: transparent; border-bottom: 1px solid #1A1C20; padding: 15px 0px;'>
-            <div style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: #6B7280; text-transform: uppercase; letter-spacing: 1px;'>Total Chats Analyzed</div>
-            <div style='font-family: "JetBrains Mono", monospace; font-size: 1.8rem; font-weight: 700; color: #FFFFFF;'>// {total_messages}</div>
+        <div class='border-divider' style='background-color: transparent; padding: 15px 0px;'>
+            <div class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;'>Total Chats Analyzed</div>
+            <div class='text-high-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 1.8rem; font-weight: 700;'>// {total_messages}</div>
         </div>
         """, unsafe_allow_html=True)
     with m_col2:
         st.markdown(f"""
-        <div style='background-color: transparent; border-bottom: 1px solid #1A1C20; padding: 15px 0px;'>
-            <div style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: #6B7280; text-transform: uppercase; letter-spacing: 1px;'>Warnings Dispatched</div>
+        <div class='border-divider' style='background-color: transparent; padding: 15px 0px;'>
+            <div class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;'>Warnings Dispatched</div>
             <div style='font-family: "JetBrains Mono", monospace; font-size: 1.8rem; font-weight: 700; color: #F59E0B;'>// {warns_issued}</div>
         </div>
         """, unsafe_allow_html=True)
     with m_col3:
         st.markdown(f"""
-        <div style='background-color: transparent; border-bottom: 1px solid #1A1C20; padding: 15px 0px;'>
-            <div style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: #6B7280; text-transform: uppercase; letter-spacing: 1px;'>Player Mutings</div>
+        <div class='border-divider' style='background-color: transparent; padding: 15px 0px;'>
+            <div class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;'>Player Mutings</div>
             <div style='font-family: "JetBrains Mono", monospace; font-size: 1.8rem; font-weight: 700; color: #3B82F6;'>// {mutes_issued}</div>
         </div>
         """, unsafe_allow_html=True)
     with m_col4:
         st.markdown(f"""
-        <div style='background-color: transparent; border-bottom: 1px solid #1A1C20; padding: 15px 0px;'>
-            <div style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: #6B7280; text-transform: uppercase; letter-spacing: 1px;'>Permanent Bans</div>
+        <div class='border-divider' style='background-color: transparent; padding: 15px 0px;'>
+            <div class='text-dim-contrast' style='font-family: "JetBrains Mono", monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;'>Permanent Bans</div>
             <div style='font-family: "JetBrains Mono", monospace; font-size: 1.8rem; font-weight: 700; color: #EF4444;'>// {bans_issued}</div>
         </div>
         """, unsafe_allow_html=True)

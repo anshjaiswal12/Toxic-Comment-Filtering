@@ -1,40 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-/* Force dark application background */
+/* Adapt dynamically to Streamlit's dark/light variables */
 .stApp {
-    background-color: #0B0C0E !important;
+    background-color: var(--background-color, #0B0C0E) !important;
 }
 
-/* Global text color overrides for dark minimalist aesthetic */
+/* Global text color overrides for dynamic contrast */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
-    color: #E5E7EB !important;
+    color: var(--text-color, #E5E7EB) !important;
 }
 
-/* Ensure all text block variants align to elegant dark layout */
+/* Ensure all text block variants align to dynamic contrast layout */
 p, span, label, li, h1, h2, h3, h4, h5, h6, table, tr, td, th {
-    color: #E5E7EB !important;
+    color: var(--text-color, #E5E7EB) !important;
 }
 
 /* Input label / help text colors */
 .stTextInput label, .stSlider label {
-    color: #9CA3AF !important;
+    color: var(--text-color, #9CA3AF) !important;
+    opacity: 0.8;
 }
 
 h1, h2, h3, .title-text {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     letter-spacing: -0.5px;
-    color: #FFFFFF !important;
+    color: var(--text-color, #FFFFFF) !important;
 }
 
 /* Sidebar styling */
 [data-testid="stSidebar"] {
-    background-color: #0E0F12 !important;
-    border-right: 1px solid #1A1C20 !important;
+    background-color: var(--secondary-background-color, #0E0F12) !important;
+    border-right: 1px solid rgba(128, 128, 128, 0.15) !important;
 }
 [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
-    color: #E5E7EB !important;
+    color: var(--text-color, #E5E7EB) !important;
 }
 
 /* Custom Scrollbar for chat container */
@@ -42,21 +43,22 @@ h1, h2, h3, .title-text {
     width: 4px;
 }
 ::-webkit-scrollbar-track {
-    background: #0B0C0E; 
+    background: transparent; 
 }
 ::-webkit-scrollbar-thumb {
-    background: #1F2229; 
+    background: rgba(128, 128, 128, 0.2); 
     border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #374151; 
+    background: rgba(128, 128, 128, 0.4); 
 }
 
 /* Minimal Aesthetic classes */
 .minimal-subhead {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem;
-    color: #6B7280;
+    color: var(--text-color, #6B7280) !important;
+    opacity: 0.55;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 6px;
@@ -65,7 +67,7 @@ h1, h2, h3, .title-text {
 .minimal-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #FFFFFF;
+    color: var(--text-color, #FFFFFF) !important;
     letter-spacing: -0.5px;
     margin-top: 0px;
     margin-bottom: 6px;
@@ -73,13 +75,14 @@ h1, h2, h3, .title-text {
 
 .minimal-subtitle {
     font-size: 0.85rem;
-    color: #9CA3AF;
+    color: var(--text-color, #9CA3AF) !important;
+    opacity: 0.75;
     margin-bottom: 24px;
 }
 
 /* Custom Minimal Input (text box) */
 .minimal-input-container {
-    border-bottom: 1px solid #1F2937;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15);
     margin-bottom: 12px;
     padding-bottom: 6px;
 }
@@ -116,4 +119,35 @@ h1, h2, h3, .title-text {
     font-size: 0.7rem;
     font-weight: bold;
     margin-left: 6px;
+}
+
+/* High Contrast & Adaptive utilities for embedded HTML */
+.text-high-contrast {
+    color: var(--text-color, #FFFFFF) !important;
+}
+
+.text-muted-contrast {
+    color: var(--text-color, #E5E7EB) !important;
+    opacity: 0.7 !important;
+}
+
+.text-dim-contrast {
+    color: var(--text-color, #E5E7EB) !important;
+    opacity: 0.55 !important;
+}
+
+.card-container {
+    background-color: var(--secondary-background-color, #0E0F12) !important;
+    border: 1px solid rgba(128, 128, 128, 0.15) !important;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.border-divider {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15) !important;
+}
+
+.chat-dashed-line {
+    border-bottom: 1px dashed rgba(128, 128, 128, 0.12) !important;
 }
