@@ -13,6 +13,7 @@ def create_zip_submission():
         "src",
         "models",
         "logs",
+        "frontend",
         "artifacts",
         "app.py",
         "train.py",
@@ -20,7 +21,9 @@ def create_zip_submission():
         "zip_submission.py",
         "toxicity_moderation_demo.ipynb",
         "Instructions.md",
-        "README.md"
+        "README.md",
+        "architecture.md",
+        "submission_manifest.md"
     ]
     
     # Exclude directories
